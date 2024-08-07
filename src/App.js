@@ -6,6 +6,8 @@ import { SkipNextRounded } from '@mui/icons-material';
 import { SkipPreviousRounded } from '@mui/icons-material';
 import { RotateLeft } from '@mui/icons-material';
 import BubbleSort from './algorithms/BubbleSort';
+import SelectionSort from './algorithms/SelectionSort';
+
 
 class App extends Component{
   state = { 
@@ -14,15 +16,15 @@ class App extends Component{
     colorKey:[],
     colorSteps: [],
     currentStep: 0,
-    count: 20,
+    count: 10,
     delay: 100,
-    algorithm: 'Bubble Sort',
+    algorithm: 'Selection Sort',
     timeouts: [],
   };
 
   ALGORITHMS = {
     'Bubble Sort' : BubbleSort,
-
+    'Selection Sort' : SelectionSort,
   }
 
   componentDidMount() {
@@ -128,6 +130,8 @@ class App extends Component{
 
     let timeouts = [];
     let i = 0;
+    console.log(`Using algorithm: ${this.state.algorithm}`);
+
 
     while(i < steps.length - this.state.currentStep) {
       let timeout = setTimeout(() => {
@@ -145,6 +149,23 @@ class App extends Component{
       timeouts: timeouts,
     });
   }
+  
+  changeAlgorithm = (event) => {
+    this.clearTimeouts();
+		this.clearColorKey();
+		this.setState(
+			{
+				algorithm: event.target.value,
+				currentStep: 0,
+				arraySteps: [
+					this.state.arraySteps[
+						this.state.currentStep === 0 ? 0 : this.state.currentStep - 1
+					],
+				],
+			},
+			() => this.generateSteps()
+		);
+  };
 
   render() {
     let bars = this.state.array.map((value, index) => (
@@ -172,6 +193,16 @@ class App extends Component{
       )
     }
     return <div className='app'>
+      <div className="pannel">
+      <div className="algorithm-selector">
+          <label htmlFor="algorithm">Choose Algorithm:</label>
+          <select id="algorithm" value={this.state.algorithm} onChange={this.changeAlgorithm}>
+            {Object.keys(this.ALGORITHMS).map((alg) => (
+              <option key={alg} value={alg}>{alg}</option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div className="frame">
         <div className="barsDive container card">{bars}</div>
       </div>
@@ -186,7 +217,7 @@ class App extends Component{
           </button>
         </div>
       </div>
-      <div className="pannel"></div>
+     
     </div>;
   }
 }
