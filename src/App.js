@@ -7,7 +7,7 @@ import { SkipPreviousRounded } from '@mui/icons-material';
 import { RotateLeft } from '@mui/icons-material';
 import BubbleSort from './algorithms/BubbleSort';
 import SelectionSort from './algorithms/SelectionSort';
-
+import InsertionSort from './algorithms/InsertionSort';
 
 class App extends Component{
   state = { 
@@ -17,14 +17,15 @@ class App extends Component{
     colorSteps: [],
     currentStep: 0,
     count: 10,
-    delay: 100,
-    algorithm: 'Selection Sort',
+    delay: 300,
+    algorithm: 'Bubble Sort',
     timeouts: [],
   };
 
   ALGORITHMS = {
     'Bubble Sort' : BubbleSort,
     'Selection Sort' : SelectionSort,
+    'Insertion Sort': InsertionSort,
   }
 
   componentDidMount() {

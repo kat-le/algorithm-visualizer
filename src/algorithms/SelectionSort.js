@@ -18,7 +18,7 @@ const SelectionSort = (array, position, arraySteps, colorSteps) => {
            
         }
         arraySteps.push(array.slice());
-        colorKey[min] = 2;
+        colorKey[min] = 3;
         colorSteps.push(colorKey.slice());
         colorKey[min] = 0;
         swap(array, i, min);
